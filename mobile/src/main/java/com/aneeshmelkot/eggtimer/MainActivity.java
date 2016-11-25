@@ -17,15 +17,49 @@ public class MainActivity extends AppCompatActivity {
     SeekBar seekbar;
     TextView timerView;
     Boolean counterIsActive = false;
-    Button timerButton = (Button)findViewById(R.id.timerButton);
+    Button timerButton;
     CountDownTimer timer;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        seekbar = (SeekBar)findViewById(R.id.seekBar);
+        timerView = (TextView)findViewById(R.id.timerView);
+        timerButton = (Button)findViewById(R.id.timerButton);
+
+        seekbar.setMax(600);
+        seekbar.setProgress(30);
+
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                updateTimer(progress);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+    }
 
     public void updateTimer(int secondsLeft) {
 
-        int minutes = (int) secondsLeft/60;
+        int minutes = secondsLeft/60;
         int seconds = secondsLeft - minutes * 60;
 
-        String secondString = Integer.toString(seconds);
+        String secondString;
+        secondString = Integer.toString(seconds);
 
         if(secondString == "0") {
             secondString = "00";
@@ -61,54 +95,25 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("Timer", "Done");
                     MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.airhorn);
                     mPlayer.start();
+
                 }
             }.start();
 
         } else {
-            timerView.setText("0:00");
-            seekbar.setProgress(30);
-            timer.cancel();
-            timerButton.setText("GO!");
-            seekbar.setEnabled(true);
-            counterIsActive = false;
+
+                timerView.setText("0:00");
+                seekbar.setProgress(30);
+                timer.cancel();
+                timerButton.setText("GO!");
+                seekbar.setEnabled(true);
+                counterIsActive = false;
+
+
         }
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        seekbar = (SeekBar)findViewById(R.id.seekBar);
-        timerView = (TextView)findViewById(R.id.timerView);
-
-        seekbar.setMax(600);
-        seekbar.setProgress(30);
-
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                updateTimer(progress);
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-
-
-
-    }
 
 
 
