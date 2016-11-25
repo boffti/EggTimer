@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 timerButton.setText("GO!");
                 seekbar.setEnabled(true);
                 counterIsActive = false;
+                timerButton.setText("GO!");
 
 
         }
